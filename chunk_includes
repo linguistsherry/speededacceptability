@@ -1,0 +1,138 @@
+chunk_includes/
+
+<script language="javascript" type="text/javascript">
+function randomString() {
+  var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+  var string_length = 8;
+  var randomstring = '';
+  for (var i=0; i<string_length; i++) {
+    var rnum = Math.floor(Math.random() * chars.length);
+    randomstring += chars.substring(rnum,rnum+1);
+  }
+  document.randform.randomfield.value = randomstring;
+}
+</script>
+
+
+<h3> Amazon identification: </h3> We require you to enter your Amazon
+worker ID and the unique identifier so that we may compensate you for
+completing this task. <br>
+And be sure to enter the identifier in both the box below and back at
+the MTurk webpage that directed you here. <br>
+
+
+<table>
+<tr>
+  <td colspan="1"> <b> 1. Please enter your Amazon worker ID: </b>
+</td>
+</tr>
+<tr>
+  <td colspan="1">
+    <textarea name="worker_id" rows="1" cols="20"
+class="obligatory"></textarea>
+  </td>
+</tr>
+<br>
+
+<tr>
+  <td colspan="1"> <b> 2. Click on the following button to create your
+unique identifier. </b> </td>
+ </tr>
+
+<tr>
+<td>
+<form name="randform">
+<input type="button" value="Create unique identifier" onClick="randomString();">&nbsp;
+<input type="text" name="randomfield" value="">
+</form>
+
+</td>
+</tr>
+
+
+<tr>
+  <td> <b>3. Copy and paste the identifier above into the box
+below: </b> </td>
+</tr>
+<tr>
+  <td colspan="1">
+    <textarea name="identifier" rows="1" cols="8" class="obligatory"></textarea>
+  </td>
+</tr>
+</table>
+
+<p>
+<b> 4. Click below to complete the experiment. Wait until the results
+have successfully uploaded to the server. <br> Once finished, be sure to
+paste your identifier into the MTurk page to receive payment. </b>
+</p>
+<table>
+<tr>
+<td colspan="2" style="width: 30em; padding-bottom: 1em;">
+<i> Please complete this short questionnaire about your language background before beginning the experiment. Please answer the questions accurately. </i>
+</td>
+</tr>
+<tr>
+<td>Please select gender:</td><td><input name="gender" type="radio" value="female" class="obligatory" id="female" /><label for="female">Female</label>
+                   <input name="gender" type="radio" value="male" id="male"/><label for="male">Male</label>
+</tr>
+<tr>
+  <td colspan="2">What is your age?</td>
+  <td colspan="2">
+    <textarea name="age" class="obligatory" rows="5" cols="40"></textarea>
+  </td>
+</tr>
+<tr>
+  <td colspan="2">What is your native language (first language you learned)</td>
+  <td colspan="2">
+    <textarea name="natlang" class="obligatory" rows="5" cols="40"></textarea>
+  </td>
+</tr>
+<tr>
+  <td colspan="2">Where did you grow up (state)?</td>
+  <td colspan="2">
+    <textarea name="state" class="obligatory" rows="5" cols="40"></textarea>
+  </td>
+</tr>
+<tr>
+  <td colspan="2">What language do your parents speak?</td>
+  <td colspan="2">
+    <textarea name="parentlang" class="obligatory" rows="5" cols="40"></textarea>
+  </td>
+</tr>
+<tr>
+  <td colspan="2">What is your dominant language?</td>
+  <td colspan="2">
+    <textarea name="domlang" class="obligatory" rows="5" cols="40"></textarea>
+  </td>
+</tr>
+<tr>
+  <td colspan="2">Do you speak any other languages?</td>
+  <td colspan="2">
+    <textarea name="otherlang" class="obligatory" rows="5" cols="40"></textarea>
+  </td>
+</tr>
+  <tr>
+  <td colspan="2">Please put in your HIT code</td>
+  <td colspan="2">
+    <textarea name="hitcode" class="obligatory" rows="5" cols="40"></textarea>
+  </td>
+</tr>
+<tr>
+
+</table>
+
+
+
+
+<div style="width: 40em;">
+
+<p>
+<b>Instructions</b>
+</p>
+<p>
+  Welcome! In this experiment, you'll be reading some sentences and you will be asked to “rate” some sentences on a scale of 1-7 (with 1 bad and 7 good). This experiment requires your <b>full attention</b>. The experiment should take no more than 20 minutes, but during this time you must give your complete attention. 
+</p>
+<p>
+If you are ready, please turn off any distractions such as music, television, or a cell phone for the next 20 minutes, and click below key to begin the practice session. Thank you!
+</p>
