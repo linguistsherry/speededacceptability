@@ -1,0 +1,66 @@
+<script language="javascript" type="text/javascript">
+function randomString() {
+  var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+  var string_length = 8;
+  var randomstring = '';
+  for (var i=0; i<string_length; i++) {
+    var rnum = Math.floor(Math.random() * chars.length);
+    randomstring += chars.substring(rnum,rnum+1);
+  }
+  document.randform.randomfield.value = randomstring;
+}
+</script>
+
+
+<h3> Amazon identification: </h3> We require you to enter your Amazon
+worker ID and the unique identifier so that we may compensate you for
+completing this task. <br>
+And be sure to enter the identifier in both the box below and back at
+the MTurk webpage that directed you here. <br>
+
+
+<table>
+<tr>
+  <td colspan="1"> <b> 1. Please enter your Amazon worker ID: </b>
+</td>
+</tr>
+<tr>
+  <td colspan="1">
+    <textarea name="worker_id" rows="1" cols="20"
+class="obligatory"></textarea>
+  </td>
+</tr>
+<br>
+
+<tr>
+  <td colspan="1"> <b> 2. Click on the following button to create your
+unique identifier. </b> </td>
+ </tr>
+
+<tr>
+<td>
+<form name="randform">
+<input type="button" value="Create unique identifier" onClick="randomString();">&nbsp;
+<input type="text" name="randomfield" value="">
+</form>
+
+</td>
+</tr>
+
+
+<tr>
+  <td> <b>3. Copy and paste the identifier above into the box
+below: </b> </td>
+</tr>
+<tr>
+  <td colspan="1">
+    <textarea name="identifier" rows="1" cols="8" class="obligatory"></textarea>
+  </td>
+</tr>
+</table>
+
+<p>
+<b> 4. Click below to complete the experiment. Wait until the results
+have successfully uploaded to the server. <br> Once finished, be sure to
+paste your identifier into the MTurk page to receive payment. </b>
+</p>
