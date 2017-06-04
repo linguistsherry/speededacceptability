@@ -1,0 +1,175 @@
+var shuffleSequence = seq("setcounter", "intro", "sepprac",
+                          sepWith("sepprac", seq("prac")), "presepA", "dummysep", "sepexp",
+                          sepWith("sepexp", rshuffle(startsWith("again"), startsWith("filler"))));
+var practiceItemTypes = ["prac"];
+var completionMessage = "Thank you for your participation! Your completion code for Mechanical Turk is: chimsky"
+
+    
+var defaults = [
+    "Separator", {
+        normalMessage: "Please wait."
+    },
+    "DashedSentence", {
+        mode: "speeded acceptability", display: "in place",
+        wordTime:300,
+        wordPauseTime:200,
+    },
+    "DashedAcceptabilityJudgment", {
+        hasCorrect: false
+    },
+    "Question", {
+        as: [["f","f: BAD"],["j","j: GOOD"]],
+        hasCorrect: false,
+        presentAsScale: true,
+        randomOrder: false,
+        showNumbers: true,
+        autoFirstChar: false, 
+        wordTime:300,
+        wordPauseTime:200,
+        instructions: "Click boxes to answer."
+    },
+    "Message", {
+        hideProgressBar: false
+    },
+    "Form", {
+        hideProgressBar: true,
+        continueOnReturn: true
+    }
+];
+
+ // insert breaks
+function modifyRunningOrder(ro) {
+
+ for (var i = 0; i < ro.length; ++i) {
+ if (i % 20 == 25 && i > 20 && i < 200) {
+ ro[i].push(new DynamicElement(
+ "Message",
+ { html: "<p>Please take a short break. The experiment will continue in 10 seconds.</p>", transfer: 10000 },
+ true
+ ));
+ }
+ }
+ return ro;
+ }
+
+
+var items = [
+
+   ["setcounter", "__SetCounter__", { }], 
+
+   ["intro", "Form", {consentRequired: true, html: {include: "intro.html" }} ],
+   ["intro", "Form", {consentRequired: true, html: {include: "intro1.html" }} ],
+   ["exit", "Form", {consentRequired: false, html: {include: "exit.html" }} ],
+    
+    ["sepprac", "Separator",  {transfer: "keypress", normalMessage: "– –", ignoreFailure: true} ],
+    
+    ["sepexp", "Separator",  {transfer: "keypress", normalMessage: "– –", ignoreFailure: true} ],
+
+    ["break", "Message", {
+        html: { include: "break.html" },
+        transfer: "keypress"
+    } ],
+    
+
+    
+    // Practice
+    
+["prac", "DashedSentence", {s: ["This", "is", "just", "a", "practice", "passage", "to", "get", "you", "used", "to", "the", "method", "of", "presentation."]}, "Question",  {q:"How is that sentence?"}],
+["prac", "DashedSentence", {s: ["This", "is", "another", "practice", "passage.", "         ", "It", "is", "longer", "and", "a", "little", "more", "complicated", "than", "the", "one", "you", "just", "read."]}, "Question",  {q:"How do you feel about that sentence?" }],
+                           
+["prac", Message, {consentRequired: false, transfer: "keypress",
+                     html: ["div",
+                           ["p", "That's all there is to it! Let's try some practice passages more like the ones you'll be seeing in the experiment. We would expect you to say that the following passages were GOOD."],
+                           ["p", "Press the spacebar to continue."]
+                           ]}],
+
+["prac", "DashedSentence", {s: ["The", "door", "was", "shut", "to", "reduce", "the", "noice", "coming", "from", "next", "door."]}, "Question",{q: "? ? ?"}],
+["prac", "DashedSentence", {s: ["Sheryl", "is", "a", "mother", "of", "three", "boys.", "         ", "This", "month,", "she","found","out","that","she","is","pregnant","again."]}, "Question", {q: "? ? ?"}],
+
+["prac", Message, {consentRequired: false, transfer: "keypress",
+                    html: ["div",
+                          ["p", "Some sentences, like the one you just read, are acceptable sentences in English."],
+                          ["p", "Try your hand at these next few sentences, which should be judged as BAD."],
+                          ["p", "Press the spacebar to continue."]
+                          ]}],
+
+["prac", "DashedSentence", {s: ["The", "ship", "sank", "to", "collect", "a", "settlement", "from", "the", "insurance","company."]}, "Question", {q: "? ? ?"}],
+["prac", "DashedSentence", {s: ["Dylan", "has", "been", "playing", "the", "guitar", "since", "he", "was", "six", "years", "old.", "         ", "Lucy", "plays", "the", "piano", "too", ]}, "Question", {q:"? ? ?"}],   
+
+["prac", Message, {consentRequired: false, transfer: "keypress",
+                    html: ["div",
+                          ["p", "Got it? Try a few more sentences to make sure that you get the idea!"],
+                          ["p", "Press the spacebar to continue."]
+                          ]}],
+
+["prac", "DashedSentence", {s: ["Lucy", "bought", "this", "book", "as", "a", "gift", "for", "her", "grandpa.", "         ", "Last", "weekend,", "she", "borrowed", "the", "book", "again."]}, "Question", {q: "? ? ?"}],
+["prac", "DashedSentence", {s: ["This", "apartment", "has", "a", "big", "kitchen", "and", "a", "bathroom.", "         ", "That", "apartment", "down", "the", "hallway", "has", "a", "bathroom", "too."]}, "Question", {q: "? ? ?"}],
+["prac", "DashedSentence", {s: ["Some", "daisies", "were", "grown", "to", "make", "the", "yard", "more", "attractive", "to", "buyers."]}, "Question", {q: "? ? ?"}],
+
+    
+["prac", Message, {consentRequired: false, transfer: "keypress",
+                     html: ["div",
+                           ["p", "That's all the practice! When you're ready to begin the experiment, press the spacebar to move ahead."],
+                           ["p", "REMEMBER: Don't overthink your response - just go with your gut feeling or intuition! The experiment will last approximately 60 minutes, and will require your full attention throughout that period. Thank you for your help!"]
+                           ]}],
+
+
+["presepA", Separator, {transfer: 3000, normalMessage: "Get your hands in position, and get ready to begin!" }],
+["dummysep", Separator, {transfer: 10, normalMessage: ""}],
+["dummysep", Separator, {transfer: 10, normalMessage: ""}],
+["dummysep", Separator, {transfer: 10, normalMessage: ""}],
+["dummysep", Separator, {transfer: 10, normalMessage: ""}],
+["dummysep", Separator, {transfer: 10, normalMessage: ""}],
+["dummysep", Separator, {transfer: 10, normalMessage: ""}],
+["dummysep", Separator, {transfer: 10, normalMessage: ""}],
+["dummysep", Separator, {transfer: 10, normalMessage: ""}],
+["dummysep", Separator, {transfer: 10, normalMessage: ""}],
+["dummysep", Separator, {transfer: 10, normalMessage: ""}],
+
+    //Presupposition "again" Stimuli List: sample items
+
+
+[["again.zero.support.replicate", 1], "DashedSentence", {s: ["Beth", "went", "diving", "last", "Monday", "afternoon.", "         ", "This", "week", "she", "went", "diving", "again."]}, "Question", {q: "? ? ?"}],
+[["again.one.support.replicate", 1], "DashedSentence", {s: ["Beth", "went", "diving", "last", "Monday", "afternoon.", "         ", "On", "Tuesday", "night,", "she", "practiced", "yoga.", "         ", "This", "week", "she", "went", "diving", "again."]}, "Question", {q: "? ? ?"}],
+[["again.two.support.replicate", 1], "DashedSentence", {s: ["Beth", "went", "diving", "last", "Monday", "afternoon.", "         ", "On", "Tuesday", "night,", "she", "practiced", "yoga.", "         ", "She", "did", "yoga", "for", "the", "rest", "of", "that", "week.", "         ", "This", "week", "she", "went", "diving", "again."]}, "Question", {q: "? ? ?"}],
+[["again.zero.neutral.replicate", 1], "DashedSentence", {s: ["Beth", "went", "running", "last", "Monday", "afternoon.", "         ", "This", "week", "she", "went", "diving", "again."]}, "Question", {q: "? ? ?"}],
+[["again.one.neutral.replicate", 1], "DashedSentence", {s: ["Beth", "went", "running", "last", "Monday", "afternoon.", "         ", "On", "Tuesday", "night,", "she", "practiced", "yoga.", "         ", "This", "week", "she", "went", "diving", "again."]}, "Question", {q: "? ? ?"}],
+[["again.two.neutral.replicate", 1], "DashedSentence", {s: ["Beth", "went", "running", "last", "Monday", "afternoon.", "         ", "On", "Tuesday", "night,", "she", "practiced", "yoga.", "         ", "She", "did", "yoga", "for", "the", "rest", "of", "that", "week.", "         ", "This", "week", "she", "went", "diving", "again."]}, "Question", {q: "? ? ?"}],
+[["again.zero.support.replicate", 2], "DashedSentence", {s: ["Nicole", "went", "shopping", "this", "morning", "at", "9AM.", "         ", "Later", "today", "she", "went", "shopping", "again."]}, "Question", {q: "? ? ?"}],
+[["again.one.support.replicate", 2], "DashedSentence", {s: ["Nicole", "went", "shopping", "this", "morning", "at", "9AM.", "         ", "She","left", "her", "handbag", "at","home.","         ", "Later", "today", "she", "went", "shopping", "again."]}, "Question", {q: "? ? ?"}],
+[["again.two.support.replicate", 2], "DashedSentence", {s: ["Nicole", "went", "shopping", "this", "morning", "at", "9AM.", "         ", "She","left", "her", "handbag", "at","home.","         ", "She", "felt", "very", "upset", "as", "she", "really", "needed", "it.", "         ", "Later", "today", "she", "went", "shopping", "again."]}, "Question", {q: "? ? ?"}],
+[["again.zero.neutral.replicate", 2], "DashedSentence", {s: ["Nicole", "went", "to", "school", "this", "morning", "at", "9AM.", "         ", "Later", "today", "she", "went", "shopping", "again."]}, "Question", {q: "? ? ?"}],
+[["again.one.neutral.replicate", 2], "DashedSentence", {s: ["Nicole", "went", "to", "school", "this", "morning", "at", "9AM.", "         ", "She","left", "her", "handbag", "at","home.","         ", "Later", "today", "she", "went", "shopping", "again."]}, "Question", {q: "? ? ?"}],
+[["again.two.neutral.replicate", 2], "DashedSentence", {s: ["Nicole", "went", "to", "school", "this", "morning", "at", "9AM.", "         ", "She","left", "her", "handbag", "at","home.","         ", "She", "felt", "very", "upset", "as", "she", "really", "needed", "it.", "         ", "Later", "today", "she", "went", "shopping", "again."]}, "Question", {q: "? ? ?"}],
+[["again.zero.support.replicate", 3], "DashedSentence", {s: ["Mary", "was", "crying", "in", "the", "afternoon.", "         ", "Right", "now", "she", "is", "crying", "again."]}, "Question", {q: "? ? ?"}],
+[["again.one.support.replicate", 3], "DashedSentence", {s: ["Mary", "was", "crying", "in", "the", "afternoon.", "         ", "She", "just", "couldn't", "find", "her", "doll.", "         ", "Right", "now", "she", "is", "crying", "again."]}, "Question", {q: "? ? ?"}],
+[["again.two.support.replicate", 3], "DashedSentence", {s: ["Mary", "was", "crying", "in", "the", "afternoon.", "         ", "She", "just", "couldn't", "find", "her", "doll.", "         ", "The", "doll", "was", "a", "birthday", "gift", "from", "her", "dad.", "         ", "Right", "now", "she", "is", "crying", "again."]}, "Question", {q: "? ? ?"}],
+[["again.zero.neutral.replicate", 3], "DashedSentence", {s: ["Mary", "was", "complaining", "in", "the", "afternoon.", "         ", "Right", "now", "she", "is", "crying", "again."]}, "Question", {q: "? ? ?"}],
+[["again.one.neutral.replicate", 3], "DashedSentence", {s: ["Mary", "was", "complaining", "in", "the", "afternoon.", "         ", "She", "just", "couldn't", "find", "her", "doll.", "         ", "Right", "now", "she", "is", "crying", "again."]}, "Question", {q: "? ? ?"}],
+[["again.two.neutral.replicate", 3], "DashedSentence", {s: ["Mary", "was", "complaining", "in", "the", "afternoon.", "         ", "She", "just", "couldn't", "find", "her", "doll.", "         ", "The", "doll", "was", "a", "birthday", "gift", "from", "her", "dad.", "         ", "Right", "now", "she", "is", "crying", "again."]}, "Question", {q: "? ? ?"}],
+[["again.zero.support.replicate", 4], "DashedSentence", {s: ["Zoe", "vomitted", "after", "drinking", "at", "the", "party.", "         ", "The", "next", "morning", "she", "vomitted", "again."]}, "Question", {q: "? ? ?"}],
+[["again.one.support.replicate", 4], "DashedSentence", {s: ["Zoe", "vomitted", "after", "drinking", "at", "the", "party.", "         ", "She", "had", "drunk", "too", "much", "alcohol.", "         ", "The", "next", "morning", "she", "vomitted", "again."]}, "Question", {q: "? ? ?"}],
+[["again.two.support.replicate", 4], "DashedSentence", {s: ["Zoe", "vomitted", "after", "drinking", "at", "the", "party.", "         ", "She", "had", "drunk", "too", "much", "alcohol.", "         ", "She", "stayed", "at", "the", "party", "until", "3", "in", "the", "morning.", "         ", "The", "next", "morning", "she", "vomitted", "again."]}, "Question", {q: "? ? ?"}],
+[["again.zero.neutral.replicate", 4], "DashedSentence", {s: ["Zoe", "yelled", "after", "drinking", "at", "the", "party.", "         ", "The", "next", "morning", "she", "vomitted", "again."]}, "Question", {q: "? ? ?"}],
+[["again.one.neutral.replicate", 4], "DashedSentence", {s: ["Zoe", "yelled", "after", "drinking", "at", "the", "party.", "         ", "She", "had", "drunk", "too", "much", "alcohol.", "         ", "The", "next", "morning", "she", "vomitted", "again."]}, "Question", {q: "? ? ?"}],
+[["again.two.neutral.replicate", 4], "DashedSentence", {s: ["Zoe", "yelled", "after", "drinking", "at", "the", "party.", "         ", "She", "had", "drunk", "too", "much", "alcohol.", "         ", "She", "stayed", "at", "the", "party", "until", "3", "in", "the", "morning.", "         ", "The", "next", "morning", "she", "vomitted", "again."]}, "Question", {q: "? ? ?"}],
+[["again.zero.support.replicate", 5], "DashedSentence", {s: ["Hilary", "and", "Joe", "are", "talking.", "         ", "Next", "week,", "they", "will", "talk", "again."]}, "Question", {q: "? ? ?"}],
+[["again.one.support.replicate", 5], "DashedSentence", {s: ["Hilary", "and", "Joe", "are", "talking.", "         ", "They", "haven't", "seen", "each", "other", "for", "weeks.", "         ", "Next", "week,", "they", "will", "talk", "again."]}, "Question", {q: "? ? ?"}],
+[["again.two.support.replicate", 5], "DashedSentence", {s: ["Hilary", "and", "Joe", "are", "talking.", "         ", "They", "haven't", "seen", "each", "other", "for", "weeks.", "         ", "Both", "of", "them", "are", "preparing", "for", "their", "exams.", "         ", "Next", "week,", "they", "will", "talk", "again."]}, "Question", {q: "? ? ?"}],
+[["again.zero.neutral.replicate", 5], "DashedSentence", {s: ["Hilary", "and", "Joe", "are", "studying.", "         ", "Next", "week,", "they", "will", "talk", "again."]}, "Question", {q: "? ? ?"}],
+[["again.one.neutral.replicate", 5], "DashedSentence", {s: ["Hilary", "and", "Joe", "are", "studying.", "         ", "They", "haven't", "seen", "each", "other", "for", "weeks.", "         ", "Next", "week,", "they", "will", "talk", "again."]}, "Question", {q: "? ? ?"}],
+[["again.two.neutral.replicate", 5], "DashedSentence", {s: ["Hilary", "and", "Joe", "are", "studying.", "         ", "They", "haven't", "seen", "each", "other", "for", "weeks.", "         ", "Both", "of", "them", "are", "preparing", "for", "their", "exams.", "         ", "Next", "week,", "they", "will", "talk", "again."]}, "Question", {q: "? ? ?"}],
+
+
+
+    // INCLUDE THE FILLERS: sample items
+
+[["filler.two.gender.bad", 188], "DashedSentence", {s: ["Molly", "baked", "a", "cake", "last", "week.", "          ", "The", "cake", "was", "lemon", "and", "orange", "flavored.", "         ", "Everyone", "at", "the", "party", "enjoyed", "it.", "         ", "They", "later", "wrote", "a", "card",  "to",  "thank", "him."]}, "Question", {q: "? ? ?"}],
+[["filler.two.gender.bad", 189], "DashedSentence", {s: ["Benjamin", "went", "to", "a", "music", "festival", "in", "July.", "          ", "Lots", "of", "famous", "singers", "were", "invited", "to", "the", "festival.", "         ", "It", "was", "so", "crowded", "and", "chaotic.", "         ", "Spending", "two", "hours", "there", "really", "exhausted", "her."]}, "Question", {q: "? ? ?"}],
+[["filler.two.gender.bad", 190], "DashedSentence", {s: ["Martin", "solved", "a", "math", "problem", "today.", "          ", "The", "problem", "was", "interesting", "but", "difficult.", "         ", "Many", "people", "had", "tried", "to", "solve", "it", "without", "success.", "         ", "The", "solution", "took",  "two", "years", "for", "her."]}, "Question", {q: "? ? ?"}],
+[["filler.two.gender.bad", 191], "DashedSentence", {s: ["Larry", "ordered", "some", "snacks", "from", "the", "Internet.", "          ", "The", "snacks", "was", "for", "a", "picnic", "on", "the", "next", "day.", "         ", "There", "were", "chocolate,", "chips,", "and", "liquorice.", "         ", "The", "taste", "of", "liquorice", "disgusted", "her."]}, "Question", {q: "? ? ?"}],
+[["filler.two.gender.bad", 192], "DashedSentence", {s: ["Will", "joined", "a", "new", "gym", "last", "month.", "          ", "The", "gym", "had", "opened", "up", "only", "two", "months", "ago.", "         ", "It", "has", "a", "lot", "of", "great", "facilities.", "         ", "The", "facilities", "all", "look", "very", "useful", "to", "her."]}, "Question", {q: "? ? ?"}]
+
+// have you deleted the last comma???
+
+];
