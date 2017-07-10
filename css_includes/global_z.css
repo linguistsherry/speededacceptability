@@ -1,17 +1,21 @@
-.DahsedSentence-sentence {
-  font-size:5em;
+.DashedSentence-sentence {
+  font-size:1.25em; 
+  margin-top: -1.4em; 
+}
+.Question-question-text {
+  font-size:1.25em; 
 }
 li.Question-scale-box {
     float: left;
     list-style: none;
-    margin-left: 5em;
+    margin-left: 0;
     padding-left: 0;
-    margin-right: 8em;
+    margin-right: 1em;
     padding-right: 0;
-    border: 2px #9ea4b1 solid;   // makes the border around the boxes thicker
-    font-size: 3em;            // font-size within the boxes
-    width: 8em;                  // width of the boxes larger (default is 1)
-    height: 4em;
+    border: 2px #9ea4b1 solid;   
+    font-size: 1.25em;            
+    width: 4em;                  
+    height: 1em;
     padding-top: 0.5em;
     padding-bottom: 0.5em;  
     text-align: center;
